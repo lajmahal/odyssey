@@ -31,9 +31,22 @@ class LoginServiceUnitTest(_system: ActorSystem) extends TestKit(_system)
 
         loginServiceActor.tell(RequestLogin("user1"), probe.ref)
         probe.expectMsg(UserLoggedIn("user1"))
+        probe.lastSender shouldBe loginServiceActor
+
+        loginServiceActor.tell(RequestLogin("user2"), probe.ref)
+        probe.expectMsg(UserLoggedIn("user2"))
+        probe.lastSender shouldBe loginServiceActor
+
+        loginServiceActor.tell(RequestActiveUserList, probe.ref)
+        probe.expectMsg(ReplyActiveUserList(Set("user1", "user2")))
+        probe.lastSender shouldBe loginServiceActor
 
         loginServiceActor.tell(RequestLogout("user1"), probe.ref)
         probe.expectMsg(UserLoggedOut("user1"))
+        probe.lastSender shouldBe loginServiceActor
+
+        loginServiceActor.tell(RequestActiveUserList, probe.ref)
+        probe.expectMsg(ReplyActiveUserList(Set("user2")))
         probe.lastSender shouldBe loginServiceActor
       }
 
