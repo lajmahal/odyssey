@@ -5,12 +5,12 @@ import akka.testkit.{TestKit, TestProbe}
 import odyssey.LoginService._
 import org.scalatest.{BeforeAndAfterAll, FreeSpecLike, Matchers}
 
-import scala.concurrent.duration.FiniteDuration
+import scala.language.postfixOps
 
 class LoginServiceUnitTest(_system: ActorSystem) extends TestKit(_system)
   with FreeSpecLike with Matchers with BeforeAndAfterAll {
 
-  def this() = this(ActorSystem("odyssey.LoginServiceUnitTest"))
+  def this() = this(ActorSystem("LoginServiceUnitTest"))
 
   override def afterAll(): Unit = shutdown(system)
 
@@ -41,7 +41,7 @@ class LoginServiceUnitTest(_system: ActorSystem) extends TestKit(_system)
         val loginServiceActor = system.actorOf(LoginService.props())
 
         loginServiceActor.tell(RequestLogout("not-logged-in"), probe.ref)
-        probe.expectNoMsg(FiniteDuration(500, "millis"))
+        probe.expectNoMsg(500 millis)
       }
     }
 
