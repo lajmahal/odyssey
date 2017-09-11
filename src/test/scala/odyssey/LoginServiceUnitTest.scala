@@ -1,6 +1,8 @@
-import LoginService._
+package odyssey
+
 import akka.actor.ActorSystem
 import akka.testkit.{TestKit, TestProbe}
+import odyssey.LoginService._
 import org.scalatest.{BeforeAndAfterAll, FreeSpecLike, Matchers}
 
 import scala.concurrent.duration.FiniteDuration
@@ -8,7 +10,7 @@ import scala.concurrent.duration.FiniteDuration
 class LoginServiceUnitTest(_system: ActorSystem) extends TestKit(_system)
   with FreeSpecLike with Matchers with BeforeAndAfterAll {
 
-  def this() = this(ActorSystem("LoginServiceUnitTest"))
+  def this() = this(ActorSystem("odyssey.LoginServiceUnitTest"))
 
   override def afterAll(): Unit = shutdown(system)
 
