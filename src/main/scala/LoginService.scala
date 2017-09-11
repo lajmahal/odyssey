@@ -1,4 +1,4 @@
-import LoginService.{ReplyActiveUserList, RequestActiveUserList, RequestLogin, UserLoggedIn}
+import LoginService._
 import akka.actor.{Actor, ActorLogging, Props}
 
 object LoginService {
@@ -6,6 +6,9 @@ object LoginService {
 
   final case class RequestLogin(userId: String)
   final case class UserLoggedIn(userId: String)
+
+  final case class RequestLogout(userId: String)
+  final case class UserLoggedOut(userId: String)
 
   case object RequestActiveUserList
   final case class ReplyActiveUserList(users: Set[String])
@@ -21,6 +24,14 @@ class LoginService extends Actor with ActorLogging {
     case RequestLogin(userId) =>
       loggedInUsers += userId
       sender() ! UserLoggedIn(userId)
+
+    case RequestLogout(userId) =>
+      if (loggedInUsers.contains(userId)) {
+        loggedInUsers -= userId
+        sender() ! UserLoggedOut(userId)
+      } else {
+        log.warning(s"Cannot log out $userId - they were never logged in!")
+      }
 
     case RequestActiveUserList => sender() ! ReplyActiveUserList(loggedInUsers)
   }
