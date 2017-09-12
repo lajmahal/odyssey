@@ -3,6 +3,8 @@ plugins {
     id "com.github.maiflai.scalatest" version "0.16"
 }
 
+apply from: 'versions.gradle'
+
 group 'lajmahal'
 version '1.0-SNAPSHOT'
 
@@ -13,12 +15,12 @@ repositories {
 }
 
 dependencies {
-    compile 'org.scala-lang:scala-library:2.12.2'
-    compile 'com.typesafe.akka:akka-actor_2.12:2.5.3'
+    compile "org.scala-lang:scala-library:${scalaVersion}.${scalaMinorVersion}"
+    compile "com.typesafe.akka:akka-actor_${scalaVersion}:${akkaVersion}"
 
-    testCompile 'org.scalatest:scalatest_2.12:3.0.1'
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.typesafe.akka:akka-testkit_2.12:2.5.3'
+    testCompile "org.scalatest:scalatest_${scalaVersion}:${scalaTestVersion}"
+    testCompile "junit:junit:${junitVersion}"
+    testCompile "com.typesafe.akka:akka-testkit_${scalaVersion}:${akkaVersion}"
 
-    testRuntime 'org.pegdown:pegdown:1.4.2'
+    testRuntime "org.pegdown:pegdown:${pegDownVersion}"
 }

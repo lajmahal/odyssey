@@ -1,0 +1,10 @@
+ext {
+    scalaVersion = "2.12"
+    scalaMinorVersion = "2"
+
+    scalaTestVersion = "3.0.1"
+    pegDownVersion = "1.4.2"
+    junitVersion = "4.12"
+
+    akkaVersion = "2.5.3"
+}
